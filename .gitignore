@@ -2,18 +2,45 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
 
 # Virtual environments
 venv/
 env/
 .venv/
+ENV/
+
+# AI
+AGENTS.md
 
 # Database files
 *.db
+*.sqlite
+*.sqlite3
+
+# PostgreSQL dumps
+*.sql.backup
+*.dump
 
 # Environment variables (credentials)
 .env
+.env.local
 
 # IDE specific
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
