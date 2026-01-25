@@ -7,7 +7,7 @@
 
 -- Trigger Function: update_feed_costs
 -- Purpose: Automatically update batch_financials when feeding occurs
--- Trigger Type: AFTER INSERT on feeding_log
+-- Trigger Type: AFTER INSERT on feeding_log thing
 -- ============================================================================
 
 CREATE OR REPLACE FUNCTION update_feed_costs()
