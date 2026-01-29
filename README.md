@@ -109,14 +109,33 @@ database/
 ├── schema.sql                    # 13 tables with constraints
 ├── batch_profit_calculation.sql  # Dynamic pricing function
 ├── feed_cost_auto_update.sql     # Real-time cost tracking trigger
-└── seeds.sql                     # 350+ sample records
+├── seeds.sql                     # 350+ sample records
+├── functions/                    # PL/pgSQL functions
+├── procedures/                   # Stored procedures
+└── queries/                      # Analytical SELECT queries
 
 docs/
 ├── PRESENTATION_2_DEMO.md        # Demo script
 └── SETUP_GUIDE.md                # Installation guide
 ```
 
+---
 
+## 🚀 Quick Start
+
+1. **Setup Database Functions** (first time only):
+   ```bash
+   uv run python setup_functions.py
+   ```
+
+2. **Start Streamlit Application**:
+   ```bash
+   uv run streamlit run app.py
+   ```
+
+3. **Access the UI**: Open http://localhost:8501
+
+> ⚠️ **Important**: Run `setup_functions.py` before first use to create database functions that analytical queries depend on.
 
 ---
 

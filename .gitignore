@@ -1,23 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables
+.env
+
+# Streamlit
+.streamlit/config.toml
+.streamlit/secrets.toml
+
+# Databases
+*.db
+*.sqlite
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
 # AI
 AGENTS.md
 
-# my own stuff
+# my files
 ignore/*
-
-# Database files
-*.db
-*.sqlite
-*.sqlite3
-
-# PostgreSQL dumps
-*.sql.backup
-*.dump
-
-# IDE specific
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-
