@@ -1,10 +1,3 @@
--- ============================================================================
--- Bluecon Aquaculture Management System - Functions
--- ============================================================================
--- PostgreSQL 14+
--- Purpose: Batch profit calculation functions
--- ============================================================================
-
 -- FUNCTION_METADATA
 -- name: calculate_batch_profit
 -- params: p_batch_id:INT
@@ -12,12 +5,10 @@
 -- returns: DECIMAL
 -- END_METADATA
 
--- ============================================================================
 -- Function: calculate_batch_profit
--- Purpose: Calculate total profit for a batch (revenue - costs)
+-- Purpose: Calculate net profit for a batch (revenue - costs)
 -- Parameters: p_batch_id (INT) - The batch to calculate profit for
 -- Returns: DECIMAL(12,2) - Net profit (can be negative for losses)
--- ============================================================================
 
 CREATE OR REPLACE FUNCTION calculate_batch_profit(p_batch_id INT)
 RETURNS DECIMAL(12,2)
@@ -29,11 +20,11 @@ DECLARE
     v_profit DECIMAL(12,2);
     v_profit_margin DECIMAL(5,2);
     v_cost_per_unit DECIMAL(12,4);
-    v_units_sold INT := 0;
+    v_initial_qty INT := 0;
 BEGIN
     -- Validate batch exists
     IF NOT EXISTS (SELECT 1 FROM batch WHERE batch_id = p_batch_id) THEN
-        RAISE EXCEPTION 'Batch % does not exist', p_batch_id;
+        RAISE EXCEPTION 'Batch with ID % not found', p_batch_id;
     END IF;
     
     -- Get species profit margin for this batch
@@ -52,18 +43,14 @@ BEGIN
     FROM batch_financials
     WHERE batch_id = p_batch_id;
     
-    -- If no financial record exists, costs are zero
-    IF v_total_costs IS NULL THEN
-        v_total_costs := 0;
-    END IF;
-    
-    -- Calculate cost per unit (for pricing)
-    SELECT initial_quantity INTO v_units_sold
+    -- Get initial quantity for cost per unit calculation
+    SELECT initial_quantity INTO v_initial_qty
     FROM batch
     WHERE batch_id = p_batch_id;
     
-    IF v_units_sold > 0 THEN
-        v_cost_per_unit := v_total_costs / v_units_sold;
+    -- Calculate cost per unit
+    IF v_initial_qty > 0 THEN
+        v_cost_per_unit := v_total_costs / v_initial_qty;
     ELSE
         v_cost_per_unit := 0;
     END IF;
@@ -81,6 +68,7 @@ BEGIN
     v_profit := v_revenue - v_total_costs;
     
     RETURN v_profit;
+    
 EXCEPTION
     WHEN division_by_zero THEN
         RAISE NOTICE 'Cannot calculate profit: batch % has zero initial quantity', p_batch_id;
@@ -90,3 +78,5 @@ EXCEPTION
         RETURN NULL;
 END;
 $$;
+
+COMMENT ON FUNCTION calculate_batch_profit IS 'Calculates net profit for a batch: (selling_price × quantity_sold) - total_costs';

@@ -124,7 +124,7 @@ with tab2:
 
                         # Render appropriate input widget
                         params_dict[param_name] = render_input_widget(
-                            param_name, param_type
+                            param_name, param_type, key_prefix="func"
                         )
                 else:
                     st.info("ℹ️ This function takes no parameters.")
@@ -215,11 +215,12 @@ with tab3:
                                 f"{param_name} (JSON)",
                                 value='[{"batch_id": 1, "qty": 100}]',
                                 help=f"Enter valid JSON for {param_name}. Example: [{{'batch_id': 1, 'qty': 100}}]",
+                                key=f"proc_{param_name}",
                             )
                         else:
                             # Reuse existing input widget renderer from functions
                             params_dict[param_name] = render_input_widget(
-                                param_name, param_type
+                                param_name, param_type, key_prefix="proc"
                             )
                 else:
                     st.info("ℹ️ This procedure takes no parameters.")

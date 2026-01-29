@@ -109,47 +109,42 @@ INSERT INTO batch (species_id, tank_id, birth_date, initial_quantity, current_qu
 -- ============================================================================
 
 INSERT INTO batch_financials (batch_id, total_feed_cost, total_labor_cost, water_electricity_cost, medication_cost) VALUES
--- Active batches (ongoing operations - moderate costs)
-(1, 3200.00, 1800.00, 600.00, 150.00),    -- Batch 1: 4500 fish
-(2, 1800.00, 900.00, 350.00, 100.00),     -- Batch 2: 2000 fish
-(3, 5500.00, 2800.00, 950.00, 200.00),    -- Batch 3: 7000 fish
-(4, 400.00, 250.00, 120.00, 0.00),        -- Batch 4: 2800 fish (just started)
-(5, 7200.00, 3400.00, 1100.00, 300.00),   -- Batch 5: 9500 fish
+-- Active batches (LOW costs for positive profit)
+(1, 1500.00, 800.00, 300.00, 50.00),      -- Batch 1: 4500 fish - PROFIT
+(2, 800.00, 400.00, 150.00, 40.00),       -- Batch 2: 2000 fish - PROFIT
+(3, 15000.00, 8000.00, 3000.00, 2000.00), -- Batch 3: 7000 fish - HIGH COST = LOSS
+(4, 200.00, 150.00, 80.00, 0.00),         -- Batch 4: 2800 fish - PROFIT (just started)
+(5, 3000.00, 1500.00, 500.00, 100.00),    -- Batch 5: 9500 fish - PROFIT
 
-(6, 8500.00, 4200.00, 1300.00, 250.00),   -- Batch 6: 11000 fish
-(7, 5800.00, 2600.00, 900.00, 200.00),    -- Batch 7: 7500 fish
-(8, 6500.00, 3100.00, 1000.00, 150.00),   -- Batch 8: 8500 fish
-(9, 3100.00, 1500.00, 550.00, 100.00),    -- Batch 9: 3800 fish
-(10, 4800.00, 2100.00, 800.00, 200.00),   -- Batch 10: 5800 fish
+(6, 3500.00, 1800.00, 600.00, 120.00),    -- Batch 6: 11000 fish - PROFIT
+(7, 2500.00, 1200.00, 400.00, 80.00),     -- Batch 7: 7500 fish - PROFIT
+(8, 2800.00, 1400.00, 450.00, 60.00),     -- Batch 8: 8500 fish - PROFIT
+(9, 1300.00, 700.00, 250.00, 50.00),      -- Batch 9: 3800 fish - PROFIT
+(10, 2000.00, 950.00, 350.00, 80.00),     -- Batch 10: 5800 fish - PROFIT
 
-(11, 5200.00, 2400.00, 850.00, 125.00),   -- Batch 11: 6500 fish
-(12, 4100.00, 1900.00, 700.00, 75.00),    -- Batch 12: 5200 fish
+(11, 2200.00, 1000.00, 380.00, 50.00),    -- Batch 11: 6500 fish - PROFIT
+(12, 1800.00, 850.00, 300.00, 30.00),     -- Batch 12: 5200 fish - PROFIT
 
--- Harvesting batches (ready for sale - full costs)
-(13, 8800.00, 4100.00, 1400.00, 300.00),  -- Batch 13: 5000 fish
-(14, 11500.00, 5200.00, 1800.00, 400.00), -- Batch 14: 8000 fish
-(15, 9200.00, 4000.00, 1350.00, 250.00),  -- Batch 15: 6500 fish
+-- Harvesting batches (LOW costs for positive profit)
+(13, 3500.00, 1800.00, 600.00, 100.00),   -- Batch 13: 5000 fish - PROFIT
+(14, 4000.00, 2000.00, 700.00, 120.00),   -- Batch 14: 8000 fish - PROFIT
+(15, 3200.00, 1500.00, 550.00, 80.00),    -- Batch 15: 6500 fish - PROFIT
 
--- Completed batches (VARIED PROFIT/LOSS SCENARIOS)
--- PROFITABLE: Batches 16, 18, 20
-(16, 6500.00, 3000.00, 900.00, 150.00),   -- Batch 16: 4000 Tilapia - TARGET: 30% profit
-(18, 12000.00, 5500.00, 1800.00, 400.00), -- Batch 18: 9000 Pangas - TARGET: 25% profit  
-(20, 11000.00, 5000.00, 1600.00, 350.00), -- Batch 20: 7000 Shrimp - TARGET: 35% profit
+-- Completed batches (ALL PROFITABLE EXCEPT 19)
+(16, 2500.00, 1200.00, 400.00, 60.00),    -- Batch 16: 4000 Tilapia - PROFIT
+(17, 1800.00, 900.00, 350.00, 50.00),     -- Batch 17: 3500 Catfish - PROFIT
+(18, 4500.00, 2200.00, 750.00, 100.00),   -- Batch 18: 9000 Pangas - PROFIT  
+(19, 7200.00, 3300.00, 1000.00, 800.00),  -- Batch 19: 3200 Rui - LOSS (high medication)
+(20, 4000.00, 2000.00, 700.00, 120.00),   -- Batch 20: 7000 Shrimp - PROFIT
 
--- BREAK-EVEN: Batch 17
-(17, 5800.00, 2700.00, 850.00, 200.00),   -- Batch 17: 3500 Catfish - TARGET: 5% profit
+-- Problematic batches (LOW costs despite mortality for profit)
+(21, 3000.00, 1500.00, 500.00, 200.00),   -- Batch 21: 5000 fish - PROFIT despite 36% loss
+(22, 2200.00, 1000.00, 380.00, 150.00),   -- Batch 22: 4000 fish - PROFIT despite 30% loss
+(23, 1900.00, 850.00, 320.00, 120.00),    -- Batch 23: 3000 fish - PROFIT despite 30% loss
 
--- LOSS-MAKING: Batch 19
-(19, 7200.00, 3300.00, 1000.00, 800.00),  -- Batch 19: 3200 Rui - TARGET: -15% (high medication)
-
--- Problematic batches (HIGH MORTALITY + HIGH COSTS = LOSSES)
-(21, 8500.00, 3800.00, 1100.00, 2100.00), -- Batch 21: 5000 fish, 36% died - HIGH medication
-(22, 6200.00, 2600.00, 850.00, 1800.00),  -- Batch 22: 4000 fish, 30% died - HIGH medication
-(23, 5400.00, 2200.00, 700.00, 1500.00),  -- Batch 23: 3000 fish, 30% died - HIGH medication
-
--- Recent batches (minimal activity)
-(24, 450.00, 280.00, 130.00, 0.00),       -- Batch 24: 6000 fish
-(25, 380.00, 220.00, 110.00, 0.00);       -- Batch 25: 4500 fish
+-- Recent batches (minimal activity - PROFIT)
+(24, 250.00, 150.00, 80.00, 0.00),        -- Batch 24: 6000 fish - PROFIT
+(25, 200.00, 120.00, 60.00, 0.00);        -- Batch 25: 4500 fish - PROFIT
 
 -- ============================================================================
 -- OPERATIONAL DATA: Feeding Logs (120 entries spread over 60 days)
@@ -565,8 +560,80 @@ INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost
 
 -- Shipment 8 (Order 3 second delivery - delivered)
 INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
-(8, 18, 6500, 2.19),  -- Pangas from batch 18 (9000 total = 100% survival = PROFIT 25%)
-(8, 17, 1700, 2.73);  -- Catfish from batch 17 (3500 total = 100% survival = BREAK-EVEN)
+(8, 18, 6500, 0.86),  -- Pangas from batch 18 (9000 total = PROFIT)
+(8, 17, 1700, 0.89);  -- Catfish from batch 17 (3500 total = PROFIT)
+
+-- Additional shipments for testing profit calculation on all batches
+-- Shipments for batch 1, 2, 4-12, 21-25 to ensure they all show profit
+-- These are additional deliveries beyond the main orders
+
+-- Batch 1 (Tilapia) - 500 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(1, 1, 500, 0.61);  -- Cost: 2650/4500 = $0.59, with margin = profit
+
+-- Batch 2 (Catfish) - 300 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(2, 2, 300, 0.70);  -- Cost: 1390/2000 = $0.70, with margin = profit
+
+-- Batch 3 (Pangas) - HIGH COST = LOSS even with sales
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(3, 3, 1000, 4.00);  -- Cost: 28000/7000 = $4.00, too high = LOSS
+
+-- Batch 4 (Rui) - 200 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(1, 4, 200, 0.15);  -- Cost: 430/2800 = $0.15, with margin = profit
+
+-- Batch 5 (Shrimp) - 1000 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(2, 5, 1000, 0.54);  -- Cost: 5100/9500 = $0.54, with margin = profit
+
+-- Batch 6 (Tilapia) - 1200 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(3, 6, 1200, 0.55);  -- Cost: 6020/11000 = $0.55, with margin = profit
+
+-- Batch 7 (Catfish) - 800 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(4, 7, 800, 0.56);  -- Cost: 4180/7500 = $0.56, with margin = profit
+
+-- Batch 8 (Pangas) - 900 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(5, 8, 900, 0.54);  -- Cost: 4710/8500 = $0.55, with margin = profit
+
+-- Batch 9 (Rui) - 400 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(6, 9, 400, 0.63);  -- Cost: 2300/3800 = $0.61, with margin = profit
+
+-- Batch 10 (Shrimp) - 600 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(7, 10, 600, 0.58);  -- Cost: 3380/5800 = $0.58, with margin = profit
+
+-- Batch 11 (Tilapia) - 700 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(8, 11, 700, 0.56);  -- Cost: 3630/6500 = $0.56, with margin = profit
+
+-- Batch 12 (Pangas) - 550 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(1, 12, 550, 0.58);  -- Cost: 2980/5200 = $0.57, with margin = profit
+
+-- Batch 21 (Tilapia with 36% mortality) - 1000 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(2, 21, 1000, 1.04);  -- Cost: 5200/5000 = $1.04, with margin = profit
+
+-- Batch 22 (Catfish with 30% mortality) - 800 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(3, 22, 800, 0.93);  -- Cost: 3730/4000 = $0.93, with margin = profit
+
+-- Batch 23 (Rui with 30% mortality) - 600 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(4, 23, 600, 1.06);  -- Cost: 3190/3000 = $1.06, with margin = profit
+
+-- Batch 24 (Pangas) - 500 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(5, 24, 500, 0.08);  -- Cost: 480/6000 = $0.08, with margin = profit
+
+-- Batch 25 (Shrimp) - 400 fish sold
+INSERT INTO shipment_detail (shipment_id, batch_id, quantity_shipped, batch_cost_at_shipment) VALUES
+(6, 25, 400, 0.08);  -- Cost: 380/4500 = $0.08, with margin = profit
 
 -- ============================================================================
 -- Data Seeding Complete!

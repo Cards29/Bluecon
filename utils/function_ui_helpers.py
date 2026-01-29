@@ -3,18 +3,20 @@ from datetime import date
 from typing import Any, Dict
 
 
-def render_input_widget(param_name: str, param_type: str) -> Any:
+def render_input_widget(param_name: str, param_type: str, key_prefix: str = "") -> Any:
     """
     Render appropriate Streamlit input widget based on SQL parameter type.
 
     Args:
         param_name: Name of the parameter
         param_type: SQL type (INT, DECIMAL, TEXT, DATE, etc.)
+        key_prefix: Unique prefix for widget key to avoid duplicate IDs
 
     Returns:
         User input value from the widget
     """
     param_type = param_type.upper()
+    widget_key = f"{key_prefix}_{param_name}" if key_prefix else param_name
 
     # Integer types
     if param_type in ["INT", "INTEGER", "BIGINT", "SMALLINT"]:
@@ -24,6 +26,7 @@ def render_input_widget(param_name: str, param_type: str) -> Any:
             step=1,
             format="%d",
             help=f"Enter an integer value for {param_name}",
+            key=widget_key,
         )
 
     # Decimal/Float types
@@ -34,12 +37,16 @@ def render_input_widget(param_name: str, param_type: str) -> Any:
             step=0.01,
             format="%.2f",
             help=f"Enter a decimal value for {param_name}",
+            key=widget_key,
         )
 
     # Text types
     elif param_type in ["TEXT", "VARCHAR", "CHAR", "STRING"]:
         return st.text_input(
-            f"{param_name} (Text)", value="", help=f"Enter text for {param_name}"
+            f"{param_name} (Text)",
+            value="",
+            help=f"Enter text for {param_name}",
+            key=widget_key
         )
 
     # Date type
@@ -47,22 +54,26 @@ def render_input_widget(param_name: str, param_type: str) -> Any:
         return st.date_input(
             f"{param_name} (Date)",
             value=date.today(),
+            key=widget_key,
             help=f"Select a date for {param_name}",
         )
 
     # Boolean type
     elif param_type in ["BOOLEAN", "BOOL"]:
         return st.checkbox(
-            f"{param_name}", value=False, help=f"Check or uncheck for {param_name}"
+            f"{param_name}",
+            value=False,
+            help=f"Check or uncheck for {param_name}",
+            key=widget_key
         )
 
     # Timestamp type
     elif param_type in ["TIMESTAMP", "DATETIME"]:
         col1, col2 = st.columns(2)
         with col1:
-            date_val = st.date_input(f"{param_name} (Date)", value=date.today())
+            date_val = st.date_input(f"{param_name} (Date)", value=date.today(), key=f"{widget_key}_date")
         with col2:
-            time_val = st.time_input(f"{param_name} (Time)")
+            time_val = st.time_input(f"{param_name} (Time)", key=f"{widget_key}_time")
         return f"{date_val} {time_val}"
 
     # Default fallback to text input
@@ -71,6 +82,7 @@ def render_input_widget(param_name: str, param_type: str) -> Any:
             f"{param_name} ({param_type})",
             value="",
             help=f"Enter value for {param_name}",
+            key=widget_key,
         )
 
 

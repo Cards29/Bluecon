@@ -1,10 +1,3 @@
--- ============================================================================
--- Bluecon Aquaculture Management System - Functions
--- ============================================================================
--- PostgreSQL 14+
--- Purpose: Water quality monitoring functions
--- ============================================================================
-
 -- FUNCTION_METADATA
 -- name: get_tank_water_quality_status
 -- params: p_tank_id:INT
@@ -12,12 +5,10 @@
 -- returns: TABLE
 -- END_METADATA
 
--- ============================================================================
 -- Function: get_tank_water_quality_status
 -- Purpose: Retrieve the most recent water quality reading for a tank
 -- Parameters: p_tank_id (INT) - The tank to check
 -- Returns: TABLE with water quality measurements
--- ============================================================================
 
 CREATE OR REPLACE FUNCTION get_tank_water_quality_status(p_tank_id INT)
 RETURNS TABLE (
@@ -36,7 +27,7 @@ AS $$
 BEGIN
     -- Validate tank exists
     IF NOT EXISTS (SELECT 1 FROM tank WHERE tank.tank_id = p_tank_id) THEN
-        RAISE EXCEPTION 'Tank % does not exist', p_tank_id;
+        RAISE EXCEPTION 'Tank with ID % not found', p_tank_id;
     END IF;
     
     -- Return the latest water quality reading
@@ -57,19 +48,7 @@ BEGIN
     WHERE wl.tank_id = p_tank_id
     ORDER BY wl.measured_at DESC
     LIMIT 1;
-    
-    -- If no readings found, raise notice
-    IF NOT FOUND THEN
-        RAISE NOTICE 'No water quality readings found for tank %', p_tank_id;
-    END IF;
 END;
 $$;
 
 COMMENT ON FUNCTION get_tank_water_quality_status IS 'Returns the most recent water quality measurements for a specified tank';
-
--- ============================================================================
--- Example Usage:
--- ============================================================================
--- SELECT * FROM get_tank_water_quality_status(1);
--- SELECT * FROM get_tank_water_quality_status(5);
--- ============================================================================
