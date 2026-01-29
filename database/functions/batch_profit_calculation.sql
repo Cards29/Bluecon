@@ -5,6 +5,13 @@
 -- Purpose: Stored functions for business calculations
 -- ============================================================================
 
+-- FUNCTION_METADATA
+-- name: calculate_batch_profit
+-- params: p_batch_id:INT
+-- description: Calculate net profit for a batch (revenue minus total costs)
+-- returns: DECIMAL
+-- END_METADATA
+
 -- Function: calculate_batch_profit
 -- Purpose: Calculate total profit for a batch (revenue - costs)
 -- Parameters: p_batch_id (INT) - The batch to calculate profit for
@@ -96,6 +103,13 @@ CREATE TYPE batch_profit_result AS (
     total_costs DECIMAL(12,2),
     total_revenue DECIMAL(12,2)
 );
+
+-- FUNCTION_METADATA
+-- name: calculate_batch_profit_detailed
+-- params: p_batch_id:INT
+-- description: Calculate detailed profit breakdown with ROI percentage and cost/revenue analysis
+-- returns: TABLE
+-- END_METADATA
 
 -- ============================================================================
 -- Function: calculate_batch_profit_detailed
