@@ -97,6 +97,9 @@ COMMENT ON FUNCTION calculate_batch_profit IS 'Calculates net profit for a batch
 -- Custom type for profit calculation results
 -- ============================================================================
 
+-- Drop type if it exists to allow recreation
+DROP TYPE IF EXISTS batch_profit_result CASCADE;
+
 CREATE TYPE batch_profit_result AS (
     profit_amount DECIMAL(12,2),
     profit_percentage DECIMAL(6,2),
